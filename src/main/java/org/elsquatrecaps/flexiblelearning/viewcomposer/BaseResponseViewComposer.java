@@ -15,21 +15,21 @@
  */
 package org.elsquatrecaps.flexiblelearning.viewcomposer;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ConfigurationData;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponent;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewConfigData;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByTagAttributesMap;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByType;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * Standard ResponseViewComposer inatantiation. 
  * @author josep
  */
 public class BaseResponseViewComposer implements ResponseViewComposer{
+    Map<String, Object> additionalData = null;
     private ResponseViewConfigData config;
 
     public BaseResponseViewComposer() {
@@ -39,6 +39,12 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
         this.config = config;
     }
     
+    /**
+     * Obté el ModelAndView corresponent i opcionalment, ja configurat a partir de les
+     * dades extretes del ResponseViewConfigData
+     * @param configureModel
+     * @return 
+     */
     @Override
     public ModelAndView getResponseView(boolean configureModel) {
         ModelAndView model;
@@ -62,6 +68,11 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
         composer.configModel(model);        
     }
     
+    /**
+     * Configura el model amb tots els elemnts de configuració continguts a 
+     * l'atribut config (de tipus ResponseViewConfigData).
+     * @param model 
+     */
     public void configModel(ModelAndView model){
           
         this.configModelFromElements(model);
@@ -69,6 +80,11 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
         this.configModelFromComponents(model);
     }
     
+    /**
+     * Configura el model a partir dels elements de tipus link. script, module i ConfigComponentElements
+     * continguts a la propietat config.
+     * @param model 
+     */
     protected void configModelFromElements(ModelAndView model){
         this.configElementsBySelector(model, "links", config.getLinks());
         this.configElementsBySelector(model, "scripts", config.getScripts());
@@ -76,6 +92,11 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
         this.configElementsByAttributeMap(model, "mefConfigComponents", config.getConfigComponentElements());
     }
     
+    /**
+     * Configura el model a partir de l'objecte de configuració del component principal 
+     * contingut a l'atribut config.
+     * @param model 
+     */
     protected void configModelFromConfigurarionData(ModelAndView model){
         config.getConfigurationDataMap().forEach(new BiConsumer<String, ConfigurationData>() {
             @Override
@@ -85,12 +106,20 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
         } );        
     }
     
+    /**
+     * Configura el model a partir dels coponents adicionals 
+     * continguts a l'atribut config.
+     * @param model 
+     */
     public void configModelFromComponents(ModelAndView model){
         config.getComponentMap().forEach(new BiConsumer<String, ResponseViewConfigData>(){
             @Override
             public void accept(String t, ResponseViewConfigData u) {
                 model.addObject(t, u);
                 ResponseViewComposer composer = ResponseViewComposerfactory.getResponseViewComposerInstance(u);
+                if(hasAdditionalData()){
+                    composer.initWithAdditionalData(getAdditionalData());
+                }
                 composer.configModel(model);
             }        
         });
@@ -118,8 +147,43 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
         }
     }
 
+    /**
+     * obté el valor de l'atribut config
+     * @return 
+     */
     public ResponseViewConfigData getConfig() {
         return config;
     }
 
+    @Override
+    public void addAdditionalData(String key, Object aditionalData) {
+        if(this.additionalData==null){
+            this.additionalData = new HashMap<>();
+        }
+        this.additionalData.put(key, aditionalData);
+    }
+
+    @Override
+    public Object getAdditionalData(String key) {
+        Object ret = null;
+        if(this.additionalData!=null){
+            ret = this.additionalData.get(key);
+        }
+        return ret;
+    }
+
+    @Override
+    public Map<String, Object> getAdditionalData() {
+        return this.additionalData;
+    }
+
+    @Override
+    public void initWithAdditionalData(Map<String, Object> aditionalData) {
+        this.additionalData = aditionalData;
+    }
+
+    @Override
+    public boolean hasAdditionalData() {
+        return this.additionalData!=null;
+    }
 }

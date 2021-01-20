@@ -16,9 +16,10 @@
 package org.elsquatrecaps.flexiblelearning.viewcomposer;
 
 import java.lang.reflect.InvocationTargetException;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponent;
+import java.util.Map;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponentConfigurator;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewConfigData;
+
 
 /**
  *
