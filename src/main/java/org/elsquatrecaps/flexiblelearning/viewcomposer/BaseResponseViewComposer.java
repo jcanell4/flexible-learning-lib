@@ -142,7 +142,7 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
             if(map.containsKey(keyElement)){
                 ((GenericMultiElementsByType) map.get(keyElement)).addAll(elements);
             }else{
-                model.addObject(keyElement, elements.getSelectors());            
+                model.addObject(keyElement, elements);            
             }  
         }
     }

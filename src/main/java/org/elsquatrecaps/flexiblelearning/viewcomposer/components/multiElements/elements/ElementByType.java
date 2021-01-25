@@ -21,6 +21,6 @@ import org.elsquatrecaps.flexiblelearning.viewcomposer.components.Component;
  *
  * @author josep
  */
-public interface ElementByType extends Component{
+public interface ElementByType{
     String getType();
 }

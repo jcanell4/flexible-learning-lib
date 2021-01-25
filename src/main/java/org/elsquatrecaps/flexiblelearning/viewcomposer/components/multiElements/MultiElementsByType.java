@@ -15,7 +15,6 @@
  */
 package org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements;
 
-import java.util.Collection;
 import java.util.List;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.Component;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.elements.ElementByType;
