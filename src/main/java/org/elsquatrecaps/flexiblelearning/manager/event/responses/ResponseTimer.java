@@ -1,10 +1,10 @@
-package org.elsquatrecaps.flexiblelearning.eventmanager.responses;
+package org.elsquatrecaps.flexiblelearning.manager.event.responses;
 
 /**
  *
  * @author josep
  */
-public class ResponseTimer extends EventResponse{
+public class ResponseTimer extends DataEventResponse{
     private Timer nextTimer=null;
     
 

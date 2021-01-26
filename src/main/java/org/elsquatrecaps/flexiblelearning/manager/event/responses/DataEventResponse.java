@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.eventmanager.responses;
+package org.elsquatrecaps.flexiblelearning.manager.event.responses;
 
 /**
  *
  * @author josep
  */
-public class EventResponse {
+public class DataEventResponse implements EventResponse{
     private CallableJavascript onReciveCallable;    
 
-    public EventResponse() {
+    public DataEventResponse() {
         this.onReciveCallable = null;
     }
 
-    public EventResponse(CallableJavascript onReciveCallable) {
+    public DataEventResponse(CallableJavascript onReciveCallable) {
         this.onReciveCallable = onReciveCallable;
     }
     

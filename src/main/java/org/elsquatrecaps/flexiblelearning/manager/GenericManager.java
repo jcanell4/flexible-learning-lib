@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.starter;
+package org.elsquatrecaps.flexiblelearning.manager;
 
 import java.util.Optional;
 import java.util.function.Supplier;
+import org.elsquatrecaps.flexiblelearning.manager.starter.StarterManager;
 import org.springframework.data.domain.Example;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
@@ -25,9 +26,8 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
  *
  * @author josep
  */
-public abstract class GenericStaterManager<LS, PMLS extends PagingAndSortingRepository<LS, String>&QueryByExampleExecutor<LS>, 
-        LP, PMLP extends PagingAndSortingRepository<LP, String>&QueryByExampleExecutor<LP>, A, PMA extends PagingAndSortingRepository<A, String>&QueryByExampleExecutor<A>>
-        implements StarterManager<LS, PMLS, LP, PMLP, A, PMA>{
+public abstract class GenericManager<LS, PMLS extends PagingAndSortingRepository<LS, String>&QueryByExampleExecutor<LS>, 
+        LP, PMLP extends PagingAndSortingRepository<LP, String>&QueryByExampleExecutor<LP>, A, PMA extends PagingAndSortingRepository<A, String>&QueryByExampleExecutor<A>>{
     PMLS learningStateRepository;
     PMLP learningProposalRepository;
     PMA activityRepository;

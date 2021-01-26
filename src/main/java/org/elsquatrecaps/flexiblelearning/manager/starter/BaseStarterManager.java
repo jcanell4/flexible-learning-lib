@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.starter;
+package org.elsquatrecaps.flexiblelearning.manager.starter;
 
+import org.elsquatrecaps.flexiblelearning.manager.GenericManager;
 import org.elsquatrecaps.flexiblelearning.learningproposal.ActivityConfiguration;
 import org.elsquatrecaps.flexiblelearning.learningproposal.LearningProposalConfiguration;
 import org.elsquatrecaps.flexiblelearning.learningstate.LearningState;
@@ -35,7 +36,8 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
 public class BaseStarterManager<PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
         PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
         PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>
-        extends GenericStaterManager<LearningState, PMLS, LearningProposalConfiguration, PMLP, ActivityConfiguration, PMA>{
+        extends GenericManager<LearningState, PMLS, LearningProposalConfiguration, PMLP, ActivityConfiguration, PMA>         
+        implements StarterManager<LearningState, PMLS, LearningProposalConfiguration, PMLP, ActivityConfiguration, PMA>{
 
     public ModelAndView start(String studentId, String learningProposalId){
         ModelAndView modelAndView = null;

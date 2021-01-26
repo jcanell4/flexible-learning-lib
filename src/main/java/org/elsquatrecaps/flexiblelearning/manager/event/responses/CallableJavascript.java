@@ -1,4 +1,4 @@
-package org.elsquatrecaps.flexiblelearning.eventmanager.responses;
+package org.elsquatrecaps.flexiblelearning.manager.event.responses;
 
 import java.io.Serializable;
 import java.util.HashMap;
