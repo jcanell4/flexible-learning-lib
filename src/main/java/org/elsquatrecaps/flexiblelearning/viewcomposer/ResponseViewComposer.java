@@ -15,6 +15,7 @@
  */
 package org.elsquatrecaps.flexiblelearning.viewcomposer;
 
+import java.util.Map;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewConfigData;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,5 +27,10 @@ public interface ResponseViewComposer {
     ModelAndView getResponseView();   
     ModelAndView getResponseView(boolean configureModel);   
     void addComponent(String key, ResponseViewConfigData component, ModelAndView model);
+    void addAdditionalData(String key, Object aditionalData);
+    Object getAdditionalData(String key);
+    Map<String, Object> getAdditionalData();
+    void initWithAdditionalData(Map<String, Object> aditionalData);
+    boolean hasAdditionalData();
     void configModel(ModelAndView model);    
 }

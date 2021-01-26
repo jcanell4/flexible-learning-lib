@@ -38,9 +38,4 @@ public class GenericElementByType implements ElementByType{
     public void setType(String type) {
         this.type = type;
     }
-
-    @Override
-    public String getTemplateName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
