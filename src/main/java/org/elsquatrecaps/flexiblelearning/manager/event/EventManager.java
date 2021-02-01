@@ -16,6 +16,9 @@
 package org.elsquatrecaps.flexiblelearning.manager.event;
 
 import java.util.Map;
+import org.elsquatrecaps.flexiblelearning.learningproposal.ActivityConfiguration;
+import org.elsquatrecaps.flexiblelearning.learningproposal.LearningProposalConfiguration;
+import org.elsquatrecaps.flexiblelearning.learningstate.LearningState;
 import org.elsquatrecaps.flexiblelearning.manager.event.responses.DataEventResponse;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
@@ -25,8 +28,9 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author josep
  */
-public interface EventManager <LS, PMLS extends PagingAndSortingRepository<LS, String>&QueryByExampleExecutor<LS>, 
-        LP, PMLP extends PagingAndSortingRepository<LP, String>&QueryByExampleExecutor<LP>, A, PMA extends PagingAndSortingRepository<A, String>&QueryByExampleExecutor<A>> {
+public interface EventManager <PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
+        PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
+        PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>> {
 
     void init(PMLS learningStateRepository, PMLP learningProposalRepository, PMA  activityRepository);
     ModelAndView processEventAndResponseHtml(Map<String,String> eventData);

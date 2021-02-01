@@ -15,6 +15,9 @@
  */
 package org.elsquatrecaps.flexiblelearning.manager.starter;
 
+import org.elsquatrecaps.flexiblelearning.learningproposal.ActivityConfiguration;
+import org.elsquatrecaps.flexiblelearning.learningproposal.LearningProposalConfiguration;
+import org.elsquatrecaps.flexiblelearning.learningstate.LearningState;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
@@ -23,8 +26,9 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
  *
  * @author josep
  */
-public interface StarterManager<LS, PMLS extends PagingAndSortingRepository<LS, String>&QueryByExampleExecutor<LS>, 
-        LP, PMLP extends PagingAndSortingRepository<LP, String>&QueryByExampleExecutor<LP>, A, PMA extends PagingAndSortingRepository<A, String>&QueryByExampleExecutor<A>>{
+public interface StarterManager<PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
+        PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
+        PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>{
 
     void init(PMLS learningStateRepository, PMLP learningProposalRepository, PMA  activityRepository);
     ModelAndView start(String studentId, String learningProposalId);

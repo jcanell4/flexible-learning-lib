@@ -35,8 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class BaseEventManager<PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
         PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
         PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>
-        extends GenericManager<LearningState, PMLS, LearningProposalConfiguration, PMLP, ActivityConfiguration, PMA>
-        implements EventManager<LearningState, PMLS, LearningProposalConfiguration, PMLP, ActivityConfiguration, PMA>{
+        extends GenericManager<PMLS, PMLP, PMA>
+        implements EventManager<PMLS, PMLP, PMA>{
 
     @Override
     public ModelAndView processEventAndResponseHtml(Map<String, String> eventData) {

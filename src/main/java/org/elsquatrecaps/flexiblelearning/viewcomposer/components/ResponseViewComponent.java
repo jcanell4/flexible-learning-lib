@@ -15,15 +15,41 @@
  */
 package org.elsquatrecaps.flexiblelearning.viewcomposer.components;
 
+import java.util.Map;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByTagAttributesMap;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByType;
+
 /**
  *
  * @author josep
  */
-public interface ResponseViewComponent extends ResponseViewConfigData{
+public interface ResponseViewComponent extends Component{
 
     /**
-     * @return the fragmentName
+     * @param baseTemplate the baseTemplate to set
      */
-    String getFragmentName();
+    void setTemplateName(String baseTemplate);
+    
+    /**
+     * @return the configurationDataMap
+     */
+    Map<String, Object> getConfigurationDataMap();   
+    
+    /**
+     * @return the componentMap
+     */
+    Map<String, ResponseViewComponent> getComponentMap();
+    
+    GenericMultiElementsByType getLinks();
+
+
+    GenericMultiElementsByType getScripts();
+
+    /**
+     * @return the modules
+     */
+    GenericMultiElementsByType getModules();
+
+    GenericMultiElementsByTagAttributesMap getConfigComponentElements();
     
 }

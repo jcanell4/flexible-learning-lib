@@ -15,37 +15,44 @@
  */
 package org.elsquatrecaps.flexiblelearning.learningproposal;
 
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewConfigData;
+import java.util.Map;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.BaseResponseViewMainComponent;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponent;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByTagAttributesMap;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByType;
 
 /**
  *
  * @author josep
  */
 @Document
-public class LearningProposalConfiguration<T extends ResponseViewConfigData> {
+public class LearningProposalConfiguration extends BaseResponseViewMainComponent{
     @Id
     private final String id;
-    private final T responseViewConfigData;
-
-    @PersistenceConstructor
-    public LearningProposalConfiguration(String id, T responseViewConfigData) {
-        this.id = id;
-        this.responseViewConfigData = responseViewConfigData;
-    }
 
     public LearningProposalConfiguration(String id) {
         this.id = id;
-        this.responseViewConfigData = null;
     }
+    
+    public LearningProposalConfiguration(String Id, String template) {
+        super(template);
+        this.id = Id;
+    }
+
+    @PersistenceConstructor
+    protected LearningProposalConfiguration(String id, String templateName, Map<String, 
+            Object> configurationDataMap, Map<String, ResponseViewComponent> componentMap, 
+            GenericMultiElementsByType links, GenericMultiElementsByType scripts, 
+            GenericMultiElementsByType modules, GenericMultiElementsByTagAttributesMap configComponentElements) {
+        super(templateName, configurationDataMap, componentMap, links, scripts, modules, configComponentElements);
+        this.id = id;
+    }
+
 
     public String getId() {
         return id;
-    }
-
-    public T getResponseViewConfigData() {
-        return responseViewConfigData;
     }
 }

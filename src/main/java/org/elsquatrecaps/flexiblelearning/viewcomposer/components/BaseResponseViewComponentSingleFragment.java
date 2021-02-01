@@ -24,18 +24,21 @@ import org.springframework.data.annotation.PersistenceConstructor;
  *
  * @author josep
  */
-public class BaseResponseViewComponent extends BaseResponseViewConfigData implements ResponseViewComponent   {
+public class BaseResponseViewComponentSingleFragment extends BaseResponseViewMainComponent implements ResponseViewComponentSingleFragment   {
     private String fragmentName;   
 
-    public BaseResponseViewComponent(String templateName, String fragmentName) {
+    public BaseResponseViewComponentSingleFragment() {
+    }
+
+    public BaseResponseViewComponentSingleFragment(String templateName, String fragmentName) {
         super(templateName);
         this.fragmentName = fragmentName;
     }
     
    @PersistenceConstructor
-   protected BaseResponseViewComponent(String templateName, String fragmentName, 
-           Map<String, ConfigurationData> configurationDataMap, 
-           Map<String, ResponseViewConfigData> componentMap, GenericMultiElementsByType links, 
+   protected BaseResponseViewComponentSingleFragment(String templateName, String fragmentName, 
+           Map<String, Object> configurationDataMap, 
+           Map<String, ResponseViewComponent> componentMap, GenericMultiElementsByType links, 
            GenericMultiElementsByType scripts, GenericMultiElementsByType modules, 
            GenericMultiElementsByTagAttributesMap configComponentElements) {
         super(templateName, configurationDataMap, componentMap, links, scripts, modules, configComponentElements);

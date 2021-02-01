@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.manager.event.actions;
-
-import java.util.Map;
-import org.elsquatrecaps.flexiblelearning.manager.event.actions.request.EventData;
+package org.elsquatrecaps.flexiblelearning.manager.event.processsing;
 
 /**
  *
  * @author josep
  */
-public interface ActivityEventActionDataAdapter<T extends EventData>{
+public class ActivityEventActionPipe {
     
-    T toEventData(Map<String, String> eventDataMap);
-    Map<String, String> toEventDataMap(EventData eventDataMap);    
 }

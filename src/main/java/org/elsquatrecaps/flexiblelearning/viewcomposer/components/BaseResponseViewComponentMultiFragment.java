@@ -25,13 +25,13 @@ import org.springframework.data.annotation.PersistenceConstructor;
  *
  * @author josep
  */
-public class BaseResponseViewComponentMultiFragment extends BaseResponseViewConfigData implements ResponseViewComponentMultiFragment{
+public class BaseResponseViewComponentMultiFragment extends BaseResponseViewMainComponent implements ResponseViewComponentMultiFragment{
    private final  Map<String, String> fragments;
 
    @PersistenceConstructor
    protected BaseResponseViewComponentMultiFragment(String templateName, Map<String, 
-           String> fragments, Map<String, ConfigurationData> configurationDataMap, 
-           Map<String, ResponseViewConfigData> componentMap, GenericMultiElementsByType links, 
+           String> fragments, Map<String, Object> configurationDataMap, 
+           Map<String, ResponseViewComponent> componentMap, GenericMultiElementsByType links, 
            GenericMultiElementsByType scripts, GenericMultiElementsByType modules, 
            GenericMultiElementsByTagAttributesMap configComponentElements) {
         super(templateName, configurationDataMap, componentMap, links, scripts, modules, configComponentElements);

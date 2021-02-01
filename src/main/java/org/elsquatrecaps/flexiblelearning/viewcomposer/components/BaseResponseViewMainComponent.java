@@ -28,17 +28,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 @ResponseViewComponentConfigurator
-public class BaseResponseViewConfigData implements ResponseViewConfigData {
+public class BaseResponseViewMainComponent implements ResponseViewComponent {
 
     private String templateName;
-    private final Map<String, ConfigurationData> configurationDataMap;
-    private final Map<String, ResponseViewConfigData> componentMap;
+    private final Map<String, Object> configurationDataMap;
+    private final Map<String, ResponseViewComponent> componentMap;
     private final GenericMultiElementsByType links;
     private final GenericMultiElementsByType scripts;
     private final GenericMultiElementsByType modules;
     private final GenericMultiElementsByTagAttributesMap configComponentElements;
 
-    public BaseResponseViewConfigData() {
+    public BaseResponseViewMainComponent() {
         this.componentMap = new HashMap<>();
         this.configurationDataMap = new HashMap<>();
         this.links = new GenericMultiElementsByType();
@@ -47,7 +47,7 @@ public class BaseResponseViewConfigData implements ResponseViewConfigData {
         this.configComponentElements = new GenericMultiElementsByTagAttributesMap();
     }
 
-    public BaseResponseViewConfigData(String template) {
+    public BaseResponseViewMainComponent(String template) {
         this.templateName = template;
         this.componentMap = new HashMap<>();
         this.configurationDataMap = new HashMap<>();
@@ -58,8 +58,8 @@ public class BaseResponseViewConfigData implements ResponseViewConfigData {
     }
 
     @PersistenceConstructor
-    protected BaseResponseViewConfigData(String templateName, Map<String, 
-            ConfigurationData> configurationDataMap, Map<String, ResponseViewConfigData> componentMap, 
+    protected BaseResponseViewMainComponent(String templateName, Map<String, 
+            Object> configurationDataMap, Map<String, ResponseViewComponent> componentMap, 
             GenericMultiElementsByType links, GenericMultiElementsByType scripts, 
             GenericMultiElementsByType modules, GenericMultiElementsByTagAttributesMap configComponentElements) {
         this.templateName = templateName;
@@ -91,7 +91,7 @@ public class BaseResponseViewConfigData implements ResponseViewConfigData {
      * @return the configurationDataMap
      */
     @Override
-    public Map<String, ConfigurationData> getConfigurationDataMap() {
+    public Map<String, Object> getConfigurationDataMap() {
         return configurationDataMap;
     }
 
@@ -99,7 +99,7 @@ public class BaseResponseViewConfigData implements ResponseViewConfigData {
      * @return the componentMap
      */
     @Override
-    public Map<String, ResponseViewConfigData> getComponentMap() {
+    public Map<String, ResponseViewComponent> getComponentMap() {
         return componentMap;
     }
 

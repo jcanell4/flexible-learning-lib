@@ -18,7 +18,7 @@ package org.elsquatrecaps.flexiblelearning.viewcomposer;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponentConfigurator;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewConfigData;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponent;
 
 
 /**
@@ -27,12 +27,12 @@ import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewCo
  */
 public class ResponseViewComposerfactory {
     
-    public static ResponseViewComposer getResponseViewComposerInstance(ResponseViewConfigData component){
+    public static ResponseViewComposer getResponseViewComposerInstance(ResponseViewComponent component){
         ResponseViewComposer ret=null;
         ResponseViewComponentConfigurator annotation = component.getClass().getAnnotation(ResponseViewComponentConfigurator.class);
         if(annotation!=null){
             try {
-                ret = (ResponseViewComposer) annotation.responseViewComposerClass().getConstructor(ResponseViewConfigData.class).newInstance(component);
+                ret = (ResponseViewComposer) annotation.responseViewComposerClass().getConstructor(ResponseViewComponent.class).newInstance(component);
             } catch (InstantiationException | SecurityException | NoSuchMethodException | 
                     IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 throw new RuntimeException(ex);

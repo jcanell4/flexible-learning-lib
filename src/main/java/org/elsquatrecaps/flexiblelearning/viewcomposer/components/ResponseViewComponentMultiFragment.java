@@ -19,7 +19,7 @@ package org.elsquatrecaps.flexiblelearning.viewcomposer.components;
  *
  * @author josep
  */
-public interface ResponseViewComponentMultiFragment extends ResponseViewConfigData{
+public interface ResponseViewComponentMultiFragment extends ResponseViewComponent{
 
     /**
      * @return the fragmentName

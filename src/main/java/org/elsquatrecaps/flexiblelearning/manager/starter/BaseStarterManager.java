@@ -21,10 +21,11 @@ import org.elsquatrecaps.flexiblelearning.learningproposal.LearningProposalConfi
 import org.elsquatrecaps.flexiblelearning.learningstate.LearningState;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.ResponseViewComposer;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.ResponseViewComposerfactory;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewConfigData;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponentSingleFragment;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponent;
 
 /**
  *
@@ -36,8 +37,8 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
 public class BaseStarterManager<PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
         PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
         PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>
-        extends GenericManager<LearningState, PMLS, LearningProposalConfiguration, PMLP, ActivityConfiguration, PMA>         
-        implements StarterManager<LearningState, PMLS, LearningProposalConfiguration, PMLP, ActivityConfiguration, PMA>{
+        extends GenericManager<PMLS, PMLP, PMA>         
+        implements StarterManager<PMLS, PMLP, PMA>{
 
     public ModelAndView start(String studentId, String learningProposalId){
         ModelAndView modelAndView = null;
@@ -53,13 +54,10 @@ public class BaseStarterManager<PMLS extends PagingAndSortingRepository<Learning
             ActivityConfiguration activityConfiguration, 
             LearningState learningState) {
         ModelAndView model;
-        ResponseViewConfigData configData = learningProposalConfiguration.getResponseViewConfigData();
-        ResponseViewComposer responseViewComposer = ResponseViewComposerfactory.getResponseViewComposerInstance(configData);
+        ResponseViewComposer responseViewComposer = ResponseViewComposerfactory.getResponseViewComposerInstance(learningProposalConfiguration);
         responseViewComposer.addAdditionalData("learningState", learningState);
-        model = responseViewComposer.getResponseView();
-        ResponseViewConfigData activityConfigData = activityConfiguration.getResponseViewComponent();
-        
-        responseViewComposer.addComponent("activityComponent", activityConfigData, model);
+        model = responseViewComposer.getResponseView();        
+        responseViewComposer.addComponent("activityComponent", activityConfiguration, model);
         
         return model;
     }

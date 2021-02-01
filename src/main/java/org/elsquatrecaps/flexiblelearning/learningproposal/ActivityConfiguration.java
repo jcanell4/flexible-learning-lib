@@ -15,7 +15,11 @@
  */
 package org.elsquatrecaps.flexiblelearning.learningproposal;
 
+import java.util.Map;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.BaseResponseViewComponentSingleFragment;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponent;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByTagAttributesMap;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,27 +29,30 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author josep
  */
 @Document
-public class ActivityConfiguration<T extends ResponseViewComponent> {
+public class ActivityConfiguration extends BaseResponseViewComponentSingleFragment{
     @Id
     private final String id;
-    private final T responseViewComponent;
-
-    @PersistenceConstructor
-    public ActivityConfiguration(String id, T responseViewComponent) {
-        this.id = id;
-        this.responseViewComponent = responseViewComponent;
-    }
 
     public ActivityConfiguration(String id) {
         this.id = id;
-        this.responseViewComponent = null;
+    }
+    
+    public ActivityConfiguration(String id, String templateName, String fragmentName) {
+        super(templateName, fragmentName);
+        this.id = id;
+    }
+    
+   @PersistenceConstructor
+   protected ActivityConfiguration(String id, String templateName, String fragmentName, 
+           Map<String, Object> configurationDataMap, 
+           Map<String, ResponseViewComponent> componentMap, GenericMultiElementsByType links, 
+           GenericMultiElementsByType scripts, GenericMultiElementsByType modules, 
+           GenericMultiElementsByTagAttributesMap configComponentElements) {
+        super(templateName, fragmentName, configurationDataMap, componentMap, links, scripts, modules, configComponentElements);
+        this.id = id;
     }
 
     public String getId() {
         return id;
-    }
-
-    public T getResponseViewComponent() {
-        return responseViewComponent;
     }
 }

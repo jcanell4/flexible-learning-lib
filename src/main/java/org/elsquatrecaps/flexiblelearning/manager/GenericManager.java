@@ -17,7 +17,9 @@ package org.elsquatrecaps.flexiblelearning.manager;
 
 import java.util.Optional;
 import java.util.function.Supplier;
-import org.elsquatrecaps.flexiblelearning.manager.starter.StarterManager;
+import org.elsquatrecaps.flexiblelearning.learningproposal.ActivityConfiguration;
+import org.elsquatrecaps.flexiblelearning.learningproposal.LearningProposalConfiguration;
+import org.elsquatrecaps.flexiblelearning.learningstate.LearningState;
 import org.springframework.data.domain.Example;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
@@ -26,8 +28,9 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
  *
  * @author josep
  */
-public abstract class GenericManager<LS, PMLS extends PagingAndSortingRepository<LS, String>&QueryByExampleExecutor<LS>, 
-        LP, PMLP extends PagingAndSortingRepository<LP, String>&QueryByExampleExecutor<LP>, A, PMA extends PagingAndSortingRepository<A, String>&QueryByExampleExecutor<A>>{
+public abstract class GenericManager<PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
+        PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
+        PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>{
     PMLS learningStateRepository;
     PMLP learningProposalRepository;
     PMA activityRepository;
@@ -40,9 +43,9 @@ public abstract class GenericManager<LS, PMLS extends PagingAndSortingRepository
         this.learningStateRepository = learningStateRepository;
     }
 
-    protected A getActivityConfiguration(String id){
-        A ret;
-        Optional<A> result=null;
+    protected ActivityConfiguration getActivityConfiguration(String id){
+        ActivityConfiguration ret;
+        Optional<ActivityConfiguration> result=null;
         result = activityRepository.findById(id);
          try {
             ret = result.orElseThrow(new Supplier<Exception>() {
@@ -58,9 +61,9 @@ public abstract class GenericManager<LS, PMLS extends PagingAndSortingRepository
          return ret;
     }
      
-    protected LP getLearningProposalConfiguration(String id){
-        LP ret;
-        Optional<LP> result=null;
+    protected LearningProposalConfiguration getLearningProposalConfiguration(String id){
+        LearningProposalConfiguration ret;
+        Optional<LearningProposalConfiguration> result=null;
         result = learningProposalRepository.findById(id);
          try {
             ret = result.orElseThrow(new Supplier<Exception>() {
@@ -76,9 +79,9 @@ public abstract class GenericManager<LS, PMLS extends PagingAndSortingRepository
          return ret;
     }
     
-    protected LS getLearningState(LS examplels){
-        LS ret = null;
-        Optional<LS> result = null;
+    protected LearningState getLearningState(LearningState examplels){
+        LearningState ret = null;
+        Optional<LearningState> result = null;
         result = learningStateRepository.findOne(Example.of(examplels));
   
         try {

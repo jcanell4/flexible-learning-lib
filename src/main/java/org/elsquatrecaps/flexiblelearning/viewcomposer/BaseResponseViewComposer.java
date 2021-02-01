@@ -18,11 +18,10 @@ package org.elsquatrecaps.flexiblelearning.viewcomposer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ConfigurationData;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewConfigData;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByTagAttributesMap;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByType;
 import org.springframework.web.servlet.ModelAndView;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponent;
 
 /**
  * Standard ResponseViewComposer inatantiation. 
@@ -30,18 +29,18 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class BaseResponseViewComposer implements ResponseViewComposer{
     Map<String, Object> additionalData = null;
-    private ResponseViewConfigData config;
+    private ResponseViewComponent config;
 
     public BaseResponseViewComposer() {
     }
 
-    public BaseResponseViewComposer(ResponseViewConfigData config) {
+    public BaseResponseViewComposer(ResponseViewComponent config) {
         this.config = config;
     }
     
     /**
      * Obté el ModelAndView corresponent i opcionalment, ja configurat a partir de les
-     * dades extretes del ResponseViewConfigData
+ dades extretes del ResponseViewComponent
      * @param configureModel
      * @return 
      */
@@ -62,7 +61,8 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
         return this.getResponseView(true);
     }
     
-    public void addComponent(String key, ResponseViewConfigData component, ModelAndView model){
+    @Override
+    public void addComponent(String key, ResponseViewComponent component, ModelAndView model){
         model.addObject(key, component);
         ResponseViewComposer composer = ResponseViewComposerfactory.getResponseViewComposerInstance(component);
         composer.configModel(model);        
@@ -70,9 +70,10 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
     
     /**
      * Configura el model amb tots els elemnts de configuració continguts a 
-     * l'atribut config (de tipus ResponseViewConfigData).
+ l'atribut config (de tipus ResponseViewComponent).
      * @param model 
      */
+    @Override
     public void configModel(ModelAndView model){
           
         this.configModelFromElements(model);
@@ -98,9 +99,9 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
      * @param model 
      */
     protected void configModelFromConfigurarionData(ModelAndView model){
-        config.getConfigurationDataMap().forEach(new BiConsumer<String, ConfigurationData>() {
+        config.getConfigurationDataMap().forEach(new BiConsumer<String, Object>() {
             @Override
-            public void accept(String t, ConfigurationData u) {
+            public void accept(String t, Object u) {
                 model.addObject(t, u);
             }
         } );        
@@ -112,9 +113,9 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
      * @param model 
      */
     public void configModelFromComponents(ModelAndView model){
-        config.getComponentMap().forEach(new BiConsumer<String, ResponseViewConfigData>(){
+        config.getComponentMap().forEach(new BiConsumer<String, ResponseViewComponent>(){
             @Override
-            public void accept(String t, ResponseViewConfigData u) {
+            public void accept(String t, ResponseViewComponent u) {
                 model.addObject(t, u);
                 ResponseViewComposer composer = ResponseViewComposerfactory.getResponseViewComposerInstance(u);
                 if(hasAdditionalData()){
@@ -151,7 +152,7 @@ public class BaseResponseViewComposer implements ResponseViewComposer{
      * obté el valor de l'atribut config
      * @return 
      */
-    public ResponseViewConfigData getConfig() {
+    public ResponseViewComponent getConfig() {
         return config;
     }
 
