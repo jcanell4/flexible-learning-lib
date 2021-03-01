@@ -28,16 +28,16 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
  *
  * @author josep
  */
-public abstract class GenericManager<PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
-        PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
-        PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>{
-    PMLS learningStateRepository;
-    PMLP learningProposalRepository;
-    PMA activityRepository;
+public abstract class GenericManager<LSR extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
+        LPR extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
+        AR extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>{
+    LSR learningStateRepository;
+    LPR learningProposalRepository;
+    AR activityRepository;
     
-    public void init(PMLS learningStateRepository, 
-            PMLP learningProposalRepository, 
-            PMA  activityRepository){
+    public void init(LSR learningStateRepository, 
+            LPR learningProposalRepository, 
+            AR  activityRepository){
         this.activityRepository = activityRepository;
         this.learningProposalRepository = learningProposalRepository;
         this.learningStateRepository = learningStateRepository;
@@ -88,7 +88,7 @@ public abstract class GenericManager<PMLS extends PagingAndSortingRepository<Lea
             ret = result.orElseThrow(new Supplier<Exception>() {
                 @Override
                 public Exception get() {
-                    Exception ex = new RuntimeException("LEARNING_PROPOSAL_NOT_FOUND");
+                    Exception ex = new RuntimeException("LEARNING_STATE_NOT_FOUND");
                     return ex;
                 }
             });

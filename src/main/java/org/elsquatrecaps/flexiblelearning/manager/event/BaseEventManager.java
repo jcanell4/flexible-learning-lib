@@ -15,47 +15,95 @@
  */
 package org.elsquatrecaps.flexiblelearning.manager.event;
 
-import java.util.Map;
+import java.util.Optional;
+import java.util.function.Supplier;
 import org.elsquatrecaps.flexiblelearning.learningproposal.ActivityConfiguration;
 import org.elsquatrecaps.flexiblelearning.learningproposal.LearningProposalConfiguration;
 import org.elsquatrecaps.flexiblelearning.learningstate.LearningState;
 import org.elsquatrecaps.flexiblelearning.manager.GenericManager;
-import org.elsquatrecaps.flexiblelearning.manager.event.responses.DataEventResponse;
+import org.elsquatrecaps.flexiblelearning.eventactivity.processsing.ModelAndViewEventResponse;
+import org.elsquatrecaps.flexiblelearning.eventactivity.processsing.RootEventProcessor;
+import org.elsquatrecaps.flexiblelearning.eventactivity.request.EventDataMap;
+import org.elsquatrecaps.flexiblelearning.eventactivity.responses.EventResponseData;
+import org.elsquatrecaps.flexiblelearning.eventcomposer.ActivityEventProcessorComposer;
+import org.elsquatrecaps.flexiblelearning.eventcomposer.EventProcessorComposerFactory;
+import org.elsquatrecaps.flexiblelearning.eventcomposer.components.ActivityEventProcessorConfiguration;
+import org.elsquatrecaps.flexiblelearning.eventcomposer.components.ActivityEventProcessorId;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
  * @author josep
- * @param <PMLS>
- * @param <PMLP>
- * @param <PMA>
+ * @param <LSR>
+ * @param <LPR>
+ * @param <AR>
  */
-public class BaseEventManager<PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
-        PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
-        PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>
-        extends GenericManager<PMLS, PMLP, PMA>
-        implements EventManager<PMLS, PMLP, PMA>{
+public class BaseEventManager<ER extends PagingAndSortingRepository<ActivityEventProcessorConfiguration, ActivityEventProcessorId>&QueryByExampleExecutor<ActivityEventProcessorConfiguration>,
+        LSR extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
+        LPR extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
+        AR extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>
+        extends GenericManager<LSR, LPR, AR>
+        implements EventManager<ER, LSR, LPR, AR>{
+    
+    ER eventRepository;
+    
+    public void init(ER  eventRopository, LSR learningStateRepository, LPR learningProposalRepository, AR  activityRepository){
+        super.init(learningStateRepository, learningProposalRepository, activityRepository);
+        this.eventRepository = eventRopository;
+    }
 
     @Override
-    public ModelAndView processEventAndResponseHtml(Map<String, String> eventData) {
-        ModelAndView ret = null;
+    public ModelAndViewEventResponse processEventAndResponseHtml(EventDataMap eventData) {
+        ModelAndViewEventResponse ret = null;
         String studentId = eventData.get("studentId");
         String LearningProposalId = eventData.get("learningProposalId");
         LearningState ls = getLearningState(new LearningState(studentId, LearningProposalId));
-        LearningProposalConfiguration lp = getLearningProposalConfiguration(LearningProposalId);
         ActivityConfiguration ac = getActivityConfiguration(ls.getCurrentActivityId());
 
         return ret;
     }
 
     @Override
-    public DataEventResponse processEventAndResponseJson(Map<String, String> eventData) {
-        DataEventResponse ret=null;
-        String StudentId = eventData.get("studentId");
-        String LearningProposalId = eventData.get("learningProposalId");
+    public EventResponseData processEventAndResponseJson(String learningProposalId, String studentId, String eventType, EventDataMap eventData) {
+        EventResponseData ret=null;
+        LearningState ls = getLearningState(new LearningState(studentId, learningProposalId));
+        ActivityEventProcessorConfiguration activityEventProcessorConfiguration = getEventProcessorConfiguration(learningProposalId, ls.getCurrentActivityId(), eventType);
+        ActivityEventProcessorComposer composer =  EventProcessorComposerFactory.getActivityEventComposerInstance(activityEventProcessorConfiguration);
+        RootEventProcessor processor = composer.getRootEventProcessor(activityEventProcessorConfiguration);
+        activityEventProcessorConfiguration.setCache(processor);
+//        this.saveActivityEventProcessor(activityEventProcessorConfiguration);
+        
+        ret = processor.process(eventData);
         
         return ret;
     }    
+    
+    protected ActivityEventProcessorConfiguration getEventProcessorConfiguration(String learningProposalId, String activityId, String eventType){
+        ActivityEventProcessorId activityEventProcessorId;
+        activityEventProcessorId = new ActivityEventProcessorId(learningProposalId, activityId, eventType);
+        ActivityEventProcessorConfiguration ret = null;
+        Optional<ActivityEventProcessorConfiguration> result = null;
+        result = eventRepository.findById(activityEventProcessorId);
+  
+        try {
+            ret = result.orElseThrow(new Supplier<Exception>() {
+                @Override
+                public Exception get() {
+                    Exception ex = new RuntimeException("ACTIVITY_EVENT_NOT_FOUND");
+                    return ex;
+                }
+            });
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }               
+        return ret;
+    }
+    
+    protected void saveActivityEventProcessor(ActivityEventProcessorConfiguration activityEventConfiguration){
+        this.eventRepository.save(activityEventConfiguration);
+    }
+    
+
+
 }

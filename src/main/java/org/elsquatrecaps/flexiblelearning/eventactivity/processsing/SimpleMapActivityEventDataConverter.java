@@ -13,13 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.manager.event.responses;
+package org.elsquatrecaps.flexiblelearning.eventactivity.processsing;
 
-import java.io.Serializable;
+import org.elsquatrecaps.flexiblelearning.eventactivity.request.EventData;
 
 /**
  *
  * @author josep
  */
-public interface EventResponse extends Serializable{
+public class SimpleMapActivityEventDataConverter implements ActivityEventDataModelConverter{
+
+    @Override
+    public EventDataToProcess getIntermediateDataModel(EventData eventData) {
+        return new EventDataToProcess(eventData, new IntermediateEventDataMap());
+    }    
 }

@@ -1,4 +1,4 @@
-package org.elsquatrecaps.flexiblelearning.manager.event.responses;
+package org.elsquatrecaps.flexiblelearning.eventactivity.responses;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,6 +11,13 @@ import java.util.Map;
 public class CallableJavascript{
     public String name=null;
     public Map<String, Serializable> params=null;
+
+    public CallableJavascript() {
+    }
+    
+    public CallableJavascript(String name) {
+        this.setName(name);
+    }
 
     /**
      * @return the name
@@ -41,6 +48,13 @@ public class CallableJavascript{
             params = new HashMap<>();
         }
         params.put(paramKey, paramValue);
+    }
+    
+    /**
+     * @param params the params to set
+     */
+    public Serializable getParam(String paramKey) {
+        return params.get(paramKey);
     }
     
     /**

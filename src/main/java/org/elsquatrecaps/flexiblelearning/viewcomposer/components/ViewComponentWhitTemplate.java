@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements;
+package org.elsquatrecaps.flexiblelearning.viewcomposer.components;
 
-import java.util.List;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.elements.ElementByTagAttributesMap;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ViewComponentWhitTemplate;
+import org.elsquatrecaps.flexiblelearning.composer.Component;
 
 /**
  *
  * @author josep
  */
-public interface MultiElementsByTagAttributesMap extends List<ElementByTagAttributesMap>, ViewComponentWhitTemplate{
-    List<String> getElementAttributesMapList();
+public interface ViewComponentWhitTemplate extends Component {
+
+    /**
+     * @return the baseTemplate
+     */
+    String getTemplateName();    
 }

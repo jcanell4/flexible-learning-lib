@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.manager.event.actions.request;
+package org.elsquatrecaps.flexiblelearning.eventcomposer.components;
+
+import java.util.List;
+import org.elsquatrecaps.flexiblelearning.eventactivity.processsing.RootEventProcessor;
 
 /**
  *
  * @author josep
  */
-public interface EventData {
-    
+public interface ActivityEventProcessorConfiguration extends EventComponentConfiguration{
+    EventComponentConfiguration getEventDataModeConverterConfiguration();
+    List<EventComponentConfiguration> getEventComponentConfigurationList();
+    EventComponentConfiguration getEventResponseHandlerConfiguration();
+    RootEventProcessor getCache();
+    void setCache(RootEventProcessor rootEventProcessor);
 }

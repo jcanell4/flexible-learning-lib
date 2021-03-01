@@ -15,13 +15,16 @@
  */
 package org.elsquatrecaps.flexiblelearning.learningproposal;
 
+import java.util.HashMap;
 import java.util.Map;
+import org.elsquatrecaps.flexiblelearning.eventcomposer.components.ActivityEventProcessorConfiguration;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.BaseResponseViewComponentSingleFragment;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewComponent;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByTagAttributesMap;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.GenericMultiElementsByType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -51,7 +54,7 @@ public class ActivityConfiguration extends BaseResponseViewComponentSingleFragme
         super(templateName, fragmentName, configurationDataMap, componentMap, links, scripts, modules, configComponentElements);
         this.id = id;
     }
-
+   
     public String getId() {
         return id;
     }

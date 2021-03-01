@@ -15,11 +15,13 @@
  */
 package org.elsquatrecaps.flexiblelearning.manager.event;
 
-import java.util.Map;
+import org.elsquatrecaps.flexiblelearning.eventactivity.request.EventDataMap;
 import org.elsquatrecaps.flexiblelearning.learningproposal.ActivityConfiguration;
 import org.elsquatrecaps.flexiblelearning.learningproposal.LearningProposalConfiguration;
 import org.elsquatrecaps.flexiblelearning.learningstate.LearningState;
-import org.elsquatrecaps.flexiblelearning.manager.event.responses.DataEventResponse;
+import org.elsquatrecaps.flexiblelearning.eventactivity.responses.EventResponseData;
+import org.elsquatrecaps.flexiblelearning.eventcomposer.components.ActivityEventProcessorConfiguration;
+import org.elsquatrecaps.flexiblelearning.eventcomposer.components.ActivityEventProcessorId;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,11 +30,12 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author josep
  */
-public interface EventManager <PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
-        PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
-        PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>> {
+public interface EventManager <ER extends PagingAndSortingRepository<ActivityEventProcessorConfiguration, ActivityEventProcessorId>&QueryByExampleExecutor<ActivityEventProcessorConfiguration>,
+        LSR extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
+        LPR extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
+        AR extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>> {
 
-    void init(PMLS learningStateRepository, PMLP learningProposalRepository, PMA  activityRepository);
-    ModelAndView processEventAndResponseHtml(Map<String,String> eventData);
-    DataEventResponse processEventAndResponseJson(Map<String,String> eventData);
+    void init(ER eventRepository, LSR learningStateRepository, LPR learningProposalRepository, AR  activityRepository);
+    ModelAndView processEventAndResponseHtml(EventDataMap eventData);
+    EventResponseData processEventAndResponseJson(String lpId, String stId, String event, EventDataMap eventData);
 }

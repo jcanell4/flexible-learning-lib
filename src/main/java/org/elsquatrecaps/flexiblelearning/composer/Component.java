@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Grup de millora MetFlex.
+ * Copyright 2021 Grup de millora MetFlex.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements;
-
-import java.util.List;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.elements.ElementByTagAttributesMap;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ViewComponentWhitTemplate;
+package org.elsquatrecaps.flexiblelearning.composer;
 
 /**
  *
  * @author josep
  */
-public interface MultiElementsByTagAttributesMap extends List<ElementByTagAttributesMap>, ViewComponentWhitTemplate{
-    List<String> getElementAttributesMapList();
+public interface Component {
 }

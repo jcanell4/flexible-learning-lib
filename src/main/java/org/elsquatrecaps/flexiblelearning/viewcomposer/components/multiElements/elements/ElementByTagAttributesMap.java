@@ -15,13 +15,13 @@
  */
 package org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.elements;
 
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.Component;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ViewComponentWhitTemplate;
 
 /**
  *
  * @author josep
  */
-public interface ElementByTagAttributesMap extends Component{
+public interface ElementByTagAttributesMap extends ViewComponentWhitTemplate{
     String getKeysAndValues();
     void setAttribute(String attributeName, String value);
 }

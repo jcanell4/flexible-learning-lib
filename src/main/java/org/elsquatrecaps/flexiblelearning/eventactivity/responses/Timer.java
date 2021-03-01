@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.elsquatrecaps.flexiblelearning.manager.event.responses;
+package org.elsquatrecaps.flexiblelearning.eventactivity.responses;
 
 /**
  *
@@ -15,7 +15,6 @@ public class Timer {
     private String dataObject=null;
     private String getDataToSend=null;
     private String requestMethod=null;
-    private String callableObject=null;
 
     public Timer() {
     }
@@ -95,19 +94,4 @@ public class Timer {
     public void setRequestMethod(String requestMethod) {
         this.requestMethod = requestMethod;
     }
-
-    /**
-     * @return the callableObject
-     */
-    public String getCallableObject() {
-        return callableObject;
-    }
-
-    /**
-     * @param callableObject the callableObject to set
-     */
-    public void setCallableObject(String callableObject) {
-        this.callableObject = callableObject;
-    }
-    
 }

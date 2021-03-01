@@ -1,4 +1,4 @@
-package org.elsquatrecaps.flexiblelearning.manager.event.responses;
+package org.elsquatrecaps.flexiblelearning.eventactivity.responses;
 
 /**
  *

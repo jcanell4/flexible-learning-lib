@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Grup de millora MetFlex.
+ * Copyright 2021 Grup de millora MetFlex.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.viewcomposer.components;
+package org.elsquatrecaps.flexiblelearning.eventactivity.responses;
+
+import java.util.LinkedList;
 
 /**
  *
  * @author josep
  */
-public interface Component {
-
-    /**
-     * @return the baseTemplate
-     */
-    String getTemplateName();    
+public class ListEventResponse extends LinkedList<DataEventResponse> implements EventResponseData{    
 }

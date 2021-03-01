@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.manager.event.responses;
+package org.elsquatrecaps.flexiblelearning.eventactivity.processsing;
 
-import java.util.LinkedList;
+import java.util.Map;
+import org.elsquatrecaps.flexiblelearning.eventactivity.request.EventData;
 
 /**
  *
  * @author josep
  */
-public class ListEventResponse extends LinkedList<DataEventResponse> implements EventResponse{    
+public interface EventDataToProcessConverter{    
+    EventDataToProcess getDataToPRocess(EventDataToProcess inputData);  
+    EventDataToProcess getImputDataFromResponse(EventDataToProcess responseData);  
 }

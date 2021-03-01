@@ -30,15 +30,15 @@ import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ResponseViewCo
 /**
  *
  * @author josep
- * @param <PMLS>
- * @param <PMLP>
- * @param <PMA>
+ * @param <LSR>
+ * @param <LPR>
+ * @param <AR>
  */
-public class BaseStarterManager<PMLS extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
-        PMLP extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
-        PMA extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>
-        extends GenericManager<PMLS, PMLP, PMA>         
-        implements StarterManager<PMLS, PMLP, PMA>{
+public class BaseStarterManager<LSR extends PagingAndSortingRepository<LearningState, String>&QueryByExampleExecutor<LearningState>, 
+        LPR extends PagingAndSortingRepository<LearningProposalConfiguration, String>&QueryByExampleExecutor<LearningProposalConfiguration>, 
+        AR extends PagingAndSortingRepository<ActivityConfiguration, String>&QueryByExampleExecutor<ActivityConfiguration>>
+        extends GenericManager<LSR, LPR, AR>         
+        implements StarterManager<LSR, LPR, AR>{
 
     public ModelAndView start(String studentId, String learningProposalId){
         ModelAndView modelAndView = null;

@@ -15,7 +15,7 @@
  */
 package org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.elements;
 
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.Component;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ViewComponentWhitTemplate;
 
 /**
  *

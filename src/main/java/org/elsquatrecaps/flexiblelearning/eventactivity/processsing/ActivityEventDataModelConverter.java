@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.manager.event.processsing;
+package org.elsquatrecaps.flexiblelearning.eventactivity.processsing;
+
+import org.elsquatrecaps.flexiblelearning.eventactivity.request.EventData;
 
 /**
  *
  * @author josep
  */
-public class ActivityEventActionPipe {
-    
+public interface ActivityEventDataModelConverter{
+    EventDataToProcess getIntermediateDataModel(EventData eventData);    
 }

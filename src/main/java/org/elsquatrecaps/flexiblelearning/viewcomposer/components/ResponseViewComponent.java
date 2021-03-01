@@ -23,7 +23,7 @@ import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.
  *
  * @author josep
  */
-public interface ResponseViewComponent extends Component{
+public interface ResponseViewComponent extends ViewComponentWhitTemplate{
 
     /**
      * @param baseTemplate the baseTemplate to set

@@ -16,14 +16,14 @@
 package org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements;
 
 import java.util.List;
-import org.elsquatrecaps.flexiblelearning.viewcomposer.components.Component;
 import org.elsquatrecaps.flexiblelearning.viewcomposer.components.multiElements.elements.ElementByType;
+import org.elsquatrecaps.flexiblelearning.viewcomposer.components.ViewComponentWhitTemplate;
 
 /**
  *
  * @author josep
  */
-public interface MultiElementsByType extends List<ElementByType>, Component{
+public interface MultiElementsByType extends List<ElementByType>, ViewComponentWhitTemplate{
     String getTemplateName();
     String getSelectors();
 }

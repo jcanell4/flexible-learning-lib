@@ -30,7 +30,6 @@ public class TimerConfig extends GenericElementTagAttributesMap{
     public static final String URL_ATTR = "data-url"; 
     public static final String DATA_OBJECT_ATTR = "data-data-object"; 
     public static final String REQUEST_METHOD_ATTR = "data-request-method"; 
-    public static final String CALLABLE_OBJECT_ATTR = "data-callable-object"; 
 
     public TimerConfig() {
         this.setAttribute(ID_ATTR, String.format("timer_%d", counter));
@@ -58,10 +57,6 @@ public class TimerConfig extends GenericElementTagAttributesMap{
 
     public void setDataObjectName(String dataObjectName){
         setAttribute(DATA_OBJECT_ATTR, dataObjectName);
-    }
-
-    public void setCallableObjectName(String callableObjectName){
-        setAttribute(CALLABLE_OBJECT_ATTR, callableObjectName);
     }
 
     public void setRequestMethod(String requestMethod){

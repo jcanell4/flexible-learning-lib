@@ -13,30 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.manager.event.processsing;
+package org.elsquatrecaps.flexiblelearning.eventactivity.processsing;
 
-import java.util.Map;
-import org.elsquatrecaps.flexiblelearning.manager.event.responses.EventResponse;
+import org.elsquatrecaps.flexiblelearning.eventactivity.request.EventData;
 
 /**
  *
  * @author josep
  */
-public class ActivityEventAction {
-    private ActivityEventActionDataAdapter adapter;
-    private ActivityEventActionEngine engine;
+public class EventDataToProcess<RD extends EventData, ID extends EventData>{
+    private RD receivedEventData;
+    private ID intermediateEventData;
 
-    public ActivityEventAction() {
-    }
-
-    public ActivityEventAction(ActivityEventActionDataAdapter adapter, ActivityEventActionEngine engine) {
-        this.adapter = adapter;
-        this.engine = engine;
+    public EventDataToProcess(RD receivedEventData, ID intermediateEventData) {
+        this.receivedEventData = receivedEventData;
+        this.intermediateEventData = intermediateEventData;
     }
     
-    public EventResponse process(Map<String, String> eventData){
-        EventResponse ret=null;
-        
-        return ret;
+    public RD getReceivedEventData() {
+        return receivedEventData;
     }
+
+    public ID getIntermediateEventData() {
+        return intermediateEventData;
+    }
+    
 }

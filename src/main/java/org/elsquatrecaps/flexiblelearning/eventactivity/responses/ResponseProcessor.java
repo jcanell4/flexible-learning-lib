@@ -13,34 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.manager.event.responses;
+package org.elsquatrecaps.flexiblelearning.eventactivity.responses;
+
+import java.io.Serializable;
 
 /**
  *
  * @author josep
  */
-public class DataEventResponse implements EventResponse{
-    private CallableJavascript onReciveCallable;    
+public class ResponseProcessor<T extends Serializable>{
+    protected String name=null;
+    protected T response;
 
-    public DataEventResponse() {
-        this.onReciveCallable = null;
-    }
 
-    public DataEventResponse(CallableJavascript onReciveCallable) {
-        this.onReciveCallable = onReciveCallable;
+    public ResponseProcessor() {
     }
     
-     /**
-     * @return the onReciveCallable
+    public ResponseProcessor(String name) {
+        this.setName(name);
+    }
+    
+    /**
+     * @return the name
      */
-    public CallableJavascript getOnReciveCallable() {
-        return onReciveCallable;
+    public String getName() {
+        return name;
     }
 
     /**
-     * @param onReciveCallable the onReciveCallable to set
+     * @param name the name to set
      */
-    public void setOnReciveCallable(CallableJavascript onReciveCallable) {
-        this.onReciveCallable = onReciveCallable;
+    public void setName(String name) {
+        this.name = name;
     }
+
+    public T getResponse() {
+        return response;
+    }
+
+    public void setResponse(T response) {
+        this.response = response;
+    }
+
 }

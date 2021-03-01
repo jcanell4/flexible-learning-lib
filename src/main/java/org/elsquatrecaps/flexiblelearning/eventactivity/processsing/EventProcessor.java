@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elsquatrecaps.flexiblelearning.manager.event.processsing;
+package org.elsquatrecaps.flexiblelearning.eventactivity.processsing;
+
+import org.elsquatrecaps.flexiblelearning.eventactivity.request.EventData;
+import org.elsquatrecaps.flexiblelearning.eventactivity.responses.EventResponseData;
 
 /**
  *
  * @author josep
  */
-public interface ActivityEventActionEngine {
-    
+public interface EventProcessor<RD extends EventData, ID extends EventData>{
+    EventDataToProcess<RD, ID> process(EventDataToProcess<RD, ID> dataToProcess);
 }
