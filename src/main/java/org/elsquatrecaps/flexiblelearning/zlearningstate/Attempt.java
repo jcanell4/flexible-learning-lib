@@ -1,7 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2021 Grup de millora MetFlex.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.elsquatrecaps.flexiblelearning.zlearningstate;
@@ -9,53 +19,56 @@ package org.elsquatrecaps.flexiblelearning.zlearningstate;
 import java.time.LocalDateTime;
 
 /**
- * Information about an attempt of one Activity
+ *
  * @author professor
  */
 public class Attempt {
-  
 
-    private ScoreValues score;
-    private AttemptStatus status;
+    private String idAttempt;
+    private String idAttemptList;
     private LocalDateTime endLocalDateTime;
-    private LocalDateTime startLocalDateTime;
+    private LocalDateTime startLocalDateTime;  //set when attempt is finished
+    private AttemptStatus attemptStatus = new AttemptStatus();
+
+
+
 
 
     /**
-     * Get the value of score
+     * Get the value of idAttempt
      *
-     * @return the value of score
+     * @return the value of idAttempt
      */
-    public ScoreValues getScore() {
-        return score;
+    public String getIdAttempt() {
+        return idAttempt;
     }
 
     /**
-     * Set the value of score
+     * Set the value of idAttempt
      *
-     * @param score new value of score
+     * @param idAttempt new value of idAttempt
      */
-    public void setScore(ScoreValues score) {
-        this.score = score;
-    }
-    
-    /**
-     * Get the value of status
-     *
-     * @return the value of status
-     */
-    public AttemptStatus getStatus() {
-        return status;
+    public void setIdAttempt(String idAttempt) {
+        this.idAttempt = idAttempt;
     }
 
     /**
-     * Set the value of status
+     * Get the value of idAttemptList
      *
-     * @param status new value of status
+     * @return the value of idAttemptList
      */
-    public void setStatus(AttemptStatus status) {
-        this.status = status;
-    }    
+    public String getIdAttemptList() {
+        return idAttemptList;
+    }
+
+    /**
+     * Set the value of idAttemptList
+     *
+     * @param idAttemptList new value of idAttemptList
+     */
+    public void setIdAttemptList(String idAttemptList) {
+        this.idAttemptList = idAttemptList;
+    }
 
     /**
      * Get the value of endLocalDateTime
@@ -98,6 +111,6 @@ public class Attempt {
         this.startLocalDateTime = startLocalDateTime;
     }
 
-    
 
+    
 }
