@@ -16,10 +16,16 @@
 
 package org.elsquatrecaps.flexiblelearning.zlearningstate;
 
+import com.google.gson.Gson;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import org.elsquatrecaps.flexiblelearning.learningproposal.ActivityConfiguration;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,7 +36,6 @@ import org.springframework.web.servlet.ModelAndView;
  */
 class AttemptStatus {
 
-    private String idStatusScheme;
     private LocalDateTime storedLocalDateTime;
     private Map<String,Object> studentInputs = new HashMap<>();
     private ActivityConfiguration activityConfiguration = null;
@@ -62,29 +67,6 @@ class AttemptStatus {
         this.attemptStatus = attemptStatus;
     }
 
-
-
-
-
-    /**
-     * Get the value of idStatusScheme;
-     *
-     * @return the value of idStatusScheme;
-     */
-    public String getIdStatusScheme() {
-        return idStatusScheme;
-    }
-
-    /**
-     * Set the value of idStatusScheme;
-     *
-     * @param idStatusScheme; new value of idStatusScheme;
-     */
-    public void setIdStatusScheme(String idStatusScheme) {
-        this.idStatusScheme= idStatusScheme;
-    }
-
-            
             
     /**
      * Get the value of storedLocalDateTime
@@ -134,19 +116,55 @@ class AttemptStatus {
     
     public void exportStudentInputs(ModelAndView mv){
         mv.getModel().putAll(studentInputs);
-        calculateAttemptStatus();
     }    
 
     /**
      * calculates AttemptStatus from studentInputs and previous AttemptStatus
      */
     //TODO
-    public void calculateAttemptStatus() {
-        ArrayList<Integer> updatedElements = new ArrayList<>();
-        // adaptar el codi
-        // executar les inicialitzacions amb valors del modelmap
-        // executar el codi adaptat
-        // recuperar els valors (només els que han tingut substitucions)
+    public void calculateAttemptStatus(StatusScheme ssch) {
+        final String procedure=ssch.getProcedure();
+        
+        if(procedure!=null){
+            final String statusName="$context",inputsName="$form";
+
+            ScriptEngineManager mgr = new ScriptEngineManager();
+            ScriptEngine engine = mgr.getEngineByName("JavaScript");
+
+
+
+            Map<String,Object> statusValues=new HashMap<>();
+
+            for(int i:attemptStatus.keySet()){
+                SchemeItem aux=ssch.get(i);
+                if(aux!=null){
+                    statusValues.put(aux.getPathName(), attemptStatus.get(i));
+                }
+            }
+            Gson gson=new Gson();
+            String statusValuesMap=gson.toJson(statusValues);
+            String studentInputsMap=gson.toJson(studentInputs);
+
+
+            try {
+                engine.eval(statusName+"="+statusValuesMap+";");
+                engine.eval(inputsName+"="+studentInputsMap+";");
+                engine.eval(procedure);
+                statusValuesMap=engine.eval("JSON.stringify("+statusName+");").toString();
+                statusValues=gson.fromJson(statusValuesMap, statusValues.getClass());
+                
+                for(String k:statusValues.keySet()){
+                    SchemeItem aux=ssch.get(k);
+                    if(aux!=null){
+                        attemptStatus.put(aux.getNumber(), statusValues.get(k));
+                    }
+                }
+                
+                
+            }catch (ScriptException ex) {
+                    Logger.getLogger(AttemptStatus.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     private String adaptCode(String code, StatusScheme scheme, ArrayList<Integer> updatedElements){

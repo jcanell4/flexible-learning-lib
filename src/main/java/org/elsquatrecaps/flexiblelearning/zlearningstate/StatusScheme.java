@@ -19,6 +19,7 @@ package org.elsquatrecaps.flexiblelearning.zlearningstate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -32,7 +33,7 @@ public class StatusScheme {
     private String idActivity;
     private TreeMap<String,SchemeItem> sortedItems= new TreeMap<>();
     private TreeMap<Integer,SchemeItem> itemsById=new TreeMap<>();
-    private final String separator="$";
+    private final String separator="\\";
     private int counter=0;
     private String procedure;
 
@@ -167,12 +168,17 @@ public class StatusScheme {
         sortedItems.put(newPathName,aux);
         
         sortedItems.remove(oldPathName);
+        
+        if(procedure!=null){    
+            procedure=procedure.replaceAll(Pattern.quote(oldPathName), newPathName);   
+        }
+        
 
         return true;
     }
 
     
-    public List<SchemeItem> getRange(String prefix){
+    public List<SchemeItem> queryRange(String prefix){
         
         return sortedItems.subMap(prefix, prefix+"~ ").values().stream().collect(Collectors.toList());
 

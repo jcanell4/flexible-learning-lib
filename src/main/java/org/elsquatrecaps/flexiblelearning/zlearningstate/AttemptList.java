@@ -26,8 +26,6 @@ public class AttemptList {
 
     private String idStudent;
 
-    private String idActivity;
-    
     private String idStatusScheme;
     
     private String currentAttemptId;
@@ -70,25 +68,7 @@ public class AttemptList {
         this.idStudent = idStudent;
     }
 
-
-    
-    /**
-     * Get the value of idActivity
-     *
-     * @return the value of idActivity
-     */
-    public String getIdActivity() {
-        return idActivity;
-    }
-
-    /**
-     * Set the value of idActivity
-     *
-     * @param idActivity new value of idActivity
-     */
-    public void setIdActivity(String idActivity) {
-        this.idActivity = idActivity;
-    }
+  
 
     /**
      * Get the value of idStatusScheme
