@@ -33,7 +33,7 @@ public class StatusScheme {
     private String idActivity;
     private TreeMap<String,SchemeItem> sortedItems= new TreeMap<>();
     private TreeMap<Integer,SchemeItem> itemsById=new TreeMap<>();
-    private final String separator="\\";
+    private final String separator="$$";
     private int counter=0;
     private String procedure;
 
@@ -73,7 +73,13 @@ public class StatusScheme {
     public void setIdActivity(String idActivity) {
         this.idActivity = idActivity;
     }
-
+    /**
+     * Adds an item
+     * @param pathName pathname of item
+     * @param description description of item
+     * @param clasz class of item
+     * @return intern identifier assigned to item; 0 if pathname duplicated
+     */
     public int addItem(String pathName, String description, Class clasz){
         int result;
         
@@ -90,7 +96,11 @@ public class StatusScheme {
         
         return result;
     }
-
+    /**
+     * gets the item corresponding to pathname
+     * @param pathName pathname to find
+     * @return item corresponding to pathname or null if there's no appropiate item
+     */
     public SchemeItem get(String pathName){
         if(!checkPathName(pathName)) return null;
 
@@ -98,10 +108,23 @@ public class StatusScheme {
 
     }
     
+    /**
+     * gets the item corresponding to id
+     * @param id internal identifier
+     * @return item corresponding to identifier id
+     */
+       
     public SchemeItem get(int id){
 
         return itemsById.get(id);
     }
+    
+    
+    /**
+     * remove item corresponding to pathName
+     * @param pathName pathName of the item to be erased
+     * @return item erased or null if it does'n exist
+     */
     
     public SchemeItem remove(String pathName){
         
@@ -114,6 +137,13 @@ public class StatusScheme {
         return itemsById.remove(aux.getNumber());
 
     }
+
+
+    /**
+     * remove item identified by id
+     * @param id internal identifier
+     * @return item removed or null if no item associated to id
+     */
     
     public SchemeItem remove(int id){
      
@@ -125,6 +155,14 @@ public class StatusScheme {
 
     }
 
+    /**
+     * updates item identified by pathname
+     * @param pathName pathName that identifies the item
+     * @param description new description for item
+     * @param clasz new class for item
+     * @return true if change has been done; false otherwise
+     */
+    
     public boolean setItem(String pathName, String description, Class clasz){
          
         if(!checkPathName(pathName)) return false;
@@ -139,6 +177,16 @@ public class StatusScheme {
         return true;
     }
     
+    
+    /**
+     * updates item identified by id
+     * @param id internal identifier
+     * @param description new description for the item
+     * @param clasz new class for the item
+     * @return true if and only if update has been done
+     */
+    
+    
     public boolean setItem(int id, String description, Class clasz){
          
         
@@ -152,6 +200,13 @@ public class StatusScheme {
         return true;
     }
 
+    
+    /**
+     * Changes pathName of an item
+     * @param oldPathName pathName to be changed
+     * @param newPathName new pathName
+     * @return  true if and only if change has been done
+     */
 
     public boolean changePath(String oldPathName, String newPathName){
          
@@ -170,13 +225,20 @@ public class StatusScheme {
         sortedItems.remove(oldPathName);
         
         if(procedure!=null){    
-            procedure=procedure.replaceAll(Pattern.quote(oldPathName), newPathName);   
+            procedure=procedure.replaceAll("[\"']"+Pattern.quote(oldPathName)+"[\"']", "\""+newPathName+"\"");   
         }
         
 
         return true;
     }
 
+    
+    /**
+     * gets sorted list of items with a pathName starting with prefix
+     * @param prefix 
+     * @return list of items
+     */
+    
     
     public List<SchemeItem> queryRange(String prefix){
         

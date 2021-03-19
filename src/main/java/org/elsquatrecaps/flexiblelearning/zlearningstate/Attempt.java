@@ -17,6 +17,9 @@
 package org.elsquatrecaps.flexiblelearning.zlearningstate;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -30,9 +33,19 @@ public class Attempt {
     private LocalDateTime startLocalDateTime;  //set when attempt is finished
     private AttemptStatus attemptStatus = new AttemptStatus();
 
+    public Attempt() {
+        startLocalDateTime= LocalDateTime.now();
+    }
+
+    public Attempt(String idAttempt, String idAttemptList) {
+        this.idAttempt=idAttempt;
+        this.idAttemptList=idAttemptList;
+        startLocalDateTime= LocalDateTime.now();
+    }
 
 
-
+    
+    
 
     /**
      * Get the value of idAttempt
@@ -111,6 +124,33 @@ public class Attempt {
         this.startLocalDateTime = startLocalDateTime;
     }
 
-
+////////////// End Setters and getters
+    /**
+     * loads last student inputs to current ModelAndView
+     * @param mv current MovelAndView
+     */
+    public void resume(ModelAndView mv){
+        attemptStatus.exportStudentInputs(mv);
+    }
     
+    /**
+     * update status of the attempt with current ModelMap
+     * @param ssch scheme used by the attempt
+     * @param mp current ModelMap
+     */
+    
+    public void storeData(StatusScheme ssch, ModelMap mp){
+        attemptStatus.updateAttemptStatus(ssch, mp);
+    }
+    
+    /**
+     * record in the object the end of the attempt 
+     * @param ssch scheme used by the attempt
+     * @param mp current ModelMap
+     */
+    
+    public void end(StatusScheme ssch, ModelMap mp){
+        storeData(ssch,mp);
+        this.endLocalDateTime=LocalDateTime.now();
+    }
 }

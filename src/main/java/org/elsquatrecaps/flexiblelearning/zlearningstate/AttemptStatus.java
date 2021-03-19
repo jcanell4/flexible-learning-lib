@@ -18,7 +18,6 @@ package org.elsquatrecaps.flexiblelearning.zlearningstate;
 
 import com.google.gson.Gson;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -109,11 +108,14 @@ class AttemptStatus {
     
 ///////////////////////////////////////////////////// end of setters and getters    
     
-    public void loadStudentInputs(ModelMap mp){
+    private void loadStudentInputs(ModelMap mp){
         studentInputs.clear();
         studentInputs.putAll(mp);
     }
-    
+    /**
+     * copy last student inputs to current ModelAndView
+     * @param mv current ModelAndView
+     */
     public void exportStudentInputs(ModelAndView mv){
         mv.getModel().putAll(studentInputs);
     }    
@@ -121,13 +123,14 @@ class AttemptStatus {
     /**
      * calculates AttemptStatus from studentInputs and previous AttemptStatus
      */
-    //TODO
-    public void calculateAttemptStatus(StatusScheme ssch) {
+
+    public void updateAttemptStatus(StatusScheme ssch, ModelMap mp) {
         final String procedure=ssch.getProcedure();
         
         if(procedure!=null){
             final String statusName="$context",inputsName="$form";
-
+            
+            loadStudentInputs(mp);
             ScriptEngineManager mgr = new ScriptEngineManager();
             ScriptEngine engine = mgr.getEngineByName("JavaScript");
 
@@ -156,7 +159,8 @@ class AttemptStatus {
                 for(String k:statusValues.keySet()){
                     SchemeItem aux=ssch.get(k);
                     if(aux!=null){
-                        attemptStatus.put(aux.getNumber(), statusValues.get(k));
+                        if(aux.getClasz()==Integer.class)attemptStatus.put(aux.getNumber(),(int)Math.round((Double)statusValues.get(k)));
+                        else attemptStatus.put(aux.getNumber(),statusValues.get(k));
                     }
                 }
                 
@@ -165,25 +169,6 @@ class AttemptStatus {
                     Logger.getLogger(AttemptStatus.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-    
-    private String adaptCode(String code, StatusScheme scheme, ArrayList<Integer> updatedElements){
-        StringBuffer newCode= new StringBuffer(code);
-        
-        for(int i:attemptStatus.keySet()){
-            SchemeItem item=scheme.get(i);
-            if(item!=null){
-                StringBuffer name=new StringBuffer(item.getPathName());
-                substituteByArray(newCode,name,i);
-            }
-        }
-        
-        return newCode.toString();
-        
-    }
-
-    private void substituteByArray(StringBuffer code, StringBuffer name, int i) {  // ha de substituir a code totes les aparicions de name per $$[i]
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
